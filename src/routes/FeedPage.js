@@ -36,35 +36,33 @@ export default class FeedPage extends React.Component {
                 }}
                 fetchPolicy="cache-and-network"
               >
-                {({ loading, data, fetchMore }) => {
-                  return (
-                    <div>
-                      <Feed
-                        entries={data.feed || []}
-                        loggedIn={!!currentUser}
-                        onVote={({ repoFullName, type }) =>
-                          mutate({
-                            variables: { repoFullName, type },
-                          })
-                        }
-                        onLoadMore={() =>
-                          fetchMore({
-                            variables: {
-                              offset: data.feed.length,
-                            },
-                            updateQuery: (prev, { fetchMoreResult }) => {
-                              if (!fetchMoreResult) return prev;
-                              return Object.assign({}, prev, {
-                                feed: [...prev.feed, ...fetchMoreResult.feed],
-                              });
-                            },
-                          })
-                        }
-                      />
-                      {loading ? <Loading /> : null}
-                    </div>
-                  );
-                }}
+                {({ loading, data, fetchMore }) => (
+                  <div>
+                    <Feed
+                      entries={data.feed || []}
+                      loggedIn={!!currentUser}
+                      onVote={({ repoFullName, type }) =>
+                        mutate({
+                          variables: { repoFullName, type },
+                        })
+                      }
+                      onLoadMore={() =>
+                        fetchMore({
+                          variables: {
+                            offset: data.feed.length,
+                          },
+                          updateQuery: (prev, { fetchMoreResult }) => {
+                            if (!fetchMoreResult) return prev;
+                            return Object.assign({}, prev, {
+                              feed: [...prev.feed, ...fetchMoreResult.feed],
+                            });
+                          },
+                        })
+                      }
+                    />
+                    {loading ? <Loading /> : null}
+                  </div>
+                )}
               </Query>
             )}
           </Query>
