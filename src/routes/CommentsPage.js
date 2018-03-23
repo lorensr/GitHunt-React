@@ -146,23 +146,21 @@ class CommentsPage extends React.Component {
         </div>
         <br />
         <div>
-          <div>
-            {entry.comments
-              .filter(comment => comment && comment.postedBy)
-              .map(comment => (
-                <Comment
-                  key={
-                    comment.postedBy.login +
-                    comment.createdAt +
-                    repository.full_name
-                  }
-                  username={comment.postedBy.login}
-                  content={comment.content}
-                  createdAt={comment.createdAt}
-                  userUrl={comment.postedBy.html_url}
-                />
-              ))}
-          </div>
+          {entry.comments
+            .filter(comment => comment && comment.postedBy)
+            .map(comment => (
+              <Comment
+                key={
+                  comment.postedBy.login +
+                  comment.createdAt +
+                  repository.full_name
+                }
+                username={comment.postedBy.login}
+                content={comment.content}
+                createdAt={comment.createdAt}
+                userUrl={comment.postedBy.html_url}
+              />
+            ))}
         </div>
       </div>
     );
